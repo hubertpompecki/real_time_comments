@@ -5,7 +5,11 @@ defmodule SonaCommentsWeb.PostLiveTest do
   import SonaComments.ContentFixtures
 
   @create_attrs %{title: "some title", text: "some text", slug: "some slug"}
-  @update_attrs %{title: "some updated title", text: "some updated text", slug: "some updated slug"}
+  @update_attrs %{
+    title: "some updated title",
+    text: "some updated text",
+    slug: "some updated slug"
+  }
   @invalid_attrs %{title: nil, text: nil, slug: nil}
 
   defp create_post(_) do

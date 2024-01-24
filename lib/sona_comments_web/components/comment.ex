@@ -9,7 +9,9 @@ defmodule SonaCommentsWeb.Comment do
         <p class="font-semibold"><%= @comment.author %></p>
       </div>
       <div>
-        <p class="text-sm text-zinc-700"><%= Calendar.strftime(@comment.inserted_at, "%y-%m-%d %I:%M:%S %p") %></p>
+        <p class="text-sm text-zinc-700">
+          <%= Calendar.strftime(@comment.inserted_at, "%y-%m-%d %I:%M:%S %p") %>
+        </p>
       </div>
     </div>
     """

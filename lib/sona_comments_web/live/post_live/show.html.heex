@@ -13,7 +13,7 @@
 <% end %>
 
 <.simple_form :let={f} for={@new_comment} phx-submit="new_comment">
-  <.input field={f[:text]} value={@new_comment.data.text} type="textarea" label="Comment"/>
+  <.input field={f[:text]} value={@new_comment.data.text} type="textarea" label="Comment" />
   <.input field={f[:author]} label="Nickname" />
   <:actions>
     <.button>Save</.button>

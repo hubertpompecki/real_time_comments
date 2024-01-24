@@ -35,7 +35,12 @@ defmodule SonaComments.ContentTest do
 
     test "update_post/2 with valid data updates the post" do
       post = post_fixture()
-      update_attrs = %{title: "some updated title", text: "some updated text", slug: "some updated slug"}
+
+      update_attrs = %{
+        title: "some updated title",
+        text: "some updated text",
+        slug: "some updated slug"
+      }
 
       assert {:ok, %Post{} = post} = Content.update_post(post, update_attrs)
       assert post.title == "some updated title"
