@@ -18,12 +18,8 @@ defmodule SonaCommentsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/posts/:slug", PostLive.Show, :show
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", SonaCommentsWeb do
-  #   pipe_through :api
-  # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:sona_comments, :dev_routes) do

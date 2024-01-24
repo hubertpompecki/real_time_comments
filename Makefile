@@ -8,3 +8,6 @@ local-server:
 local-database:
 	docker run --name sona-comments -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
 
+.PHONY: local-seeds
+local-seeds:
+	mix run priv/repo/seeds.exs
