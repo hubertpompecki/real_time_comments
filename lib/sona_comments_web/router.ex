@@ -19,6 +19,7 @@ defmodule SonaCommentsWeb.Router do
 
     get "/", PageController, :home
     live "/posts/:slug", PostLive.Show, :show
+    live "/posts", PostLive.Index, :index
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

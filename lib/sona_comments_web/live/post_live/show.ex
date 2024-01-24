@@ -35,7 +35,7 @@ defmodule SonaCommentsWeb.PostLive.Show do
 
     case Content.create_comment(post, args) do
       {:ok, comment} ->
-        PubSub.broadcast(SonaComments.PubSub, post.slug, {:new_comment, comment, self()})
+        PubSub.broadcast(SonaComments.PubSub, post.slug, {:new_comment, comment})
 
         {:noreply,
          socket
@@ -50,7 +50,7 @@ defmodule SonaCommentsWeb.PostLive.Show do
   end
 
   @impl true
-  def handle_info({:new_comment, comment, pid}, socket) do
+  def handle_info({:new_comment, comment}, socket) do
     post = socket.assigns.post
     post = %{post | comments: [comment | post.comments]}
 

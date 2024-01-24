@@ -10,7 +10,6 @@ defmodule SonaComments.Application do
     children = [
       SonaCommentsWeb.Telemetry,
       SonaComments.Repo,
-      {Phoenix.PubSub, name: SonaComments.PubSub},
       {DNSCluster, query: Application.get_env(:sona_comments, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: SonaComments.PubSub},
       # Start the Finch HTTP client for sending emails

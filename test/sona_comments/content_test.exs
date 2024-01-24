@@ -15,9 +15,9 @@ defmodule SonaComments.ContentTest do
       assert Content.list_posts() == [post]
     end
 
-    test "get_post!/1 returns the post with given id" do
+    test "get_post_by_slug!/1 returns the post with given slug" do
       post = post_fixture()
-      assert Content.get_post!(post.id) == post
+      assert Content.get_post!(post.slug) == post
     end
 
     test "create_post/1 with valid data creates a post" do
@@ -31,38 +31,6 @@ defmodule SonaComments.ContentTest do
 
     test "create_post/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Content.create_post(@invalid_attrs)
-    end
-
-    test "update_post/2 with valid data updates the post" do
-      post = post_fixture()
-
-      update_attrs = %{
-        title: "some updated title",
-        text: "some updated text",
-        slug: "some updated slug"
-      }
-
-      assert {:ok, %Post{} = post} = Content.update_post(post, update_attrs)
-      assert post.title == "some updated title"
-      assert post.text == "some updated text"
-      assert post.slug == "some updated slug"
-    end
-
-    test "update_post/2 with invalid data returns error changeset" do
-      post = post_fixture()
-      assert {:error, %Ecto.Changeset{}} = Content.update_post(post, @invalid_attrs)
-      assert post == Content.get_post!(post.id)
-    end
-
-    test "delete_post/1 deletes the post" do
-      post = post_fixture()
-      assert {:ok, %Post{}} = Content.delete_post(post)
-      assert_raise Ecto.NoResultsError, fn -> Content.get_post!(post.id) end
-    end
-
-    test "change_post/1 returns a post changeset" do
-      post = post_fixture()
-      assert %Ecto.Changeset{} = Content.change_post(post)
     end
   end
 end

@@ -37,19 +37,19 @@ Repo.insert!(%Post{
 })
 
 Repo.insert!(%Comment{
+  author: "Roy",
+  text: "Have you tried turning it off and on again?",
+  post_id: lorem_post.id
+})
+
+Repo.insert!(%Comment{
   author: "Alice",
-  text: "This is a comment from Alice.",
+  text: "This is comment number one.",
   post_id: lorem_post.id
 })
 
 Repo.insert!(%Comment{
   author: "Bob",
-  text: "This is a comment from Bob.",
-  post_id: lorem_post.id
-})
-
-Repo.insert!(%Comment{
-  author: "Charlie",
-  text: "This is a comment from Charlie.",
+  text: "This is comment number two.",
   post_id: lorem_post.id
 })

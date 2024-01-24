@@ -7,7 +7,7 @@ defmodule SonaComments.ContentFixtures do
   @doc """
   Generate a unique post slug.
   """
-  def unique_post_slug, do: "some slug#{System.unique_integer([:positive])}"
+  def unique_post_slug, do: "some-slug#{System.unique_integer([:positive])}"
 
   @doc """
   Generate a post.
