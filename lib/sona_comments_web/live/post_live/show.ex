@@ -19,16 +19,21 @@ defmodule SonaCommentsWeb.PostLive.Show do
      socket
      |> assign(:page_title, post.title)
      |> assign(:post, post)
-     |> assign(:new_post, Post.changeset(%Post{}, %{}))}
+     |> assign(:new_comment, Comment.changeset(%Comment{}, %{}))}
   end
 
   @impl true
-  def handle_event("new_post", %{"post" => %{"author" => author, "text" => text} = args}, socket) do
-    case dbg(Content.create_comment(socket.assigns.post, args)) do
+  def handle_event("new_comment", %{"comment" => %{"author" => author, "text" => text} = args}, socket) do
+    case Content.create_comment(socket.assigns.post, args) do
       {:ok, comment} ->
         post = socket.assigns.post
         post = %{post | comments: [comment | post.comments]}
-        {:noreply, assign(socket, :post, post)}
+        {:noreply, 
+          socket
+          |> assign(:post, post)
+          # not sure what is a better way to clear the form after submission
+          |> assign(:new_comment, dbg(Comment.changeset(%Comment{}, %{"author" => nil, "text" => nil})))
+        }
 
       {:error, reason} ->
         {:noreply, 

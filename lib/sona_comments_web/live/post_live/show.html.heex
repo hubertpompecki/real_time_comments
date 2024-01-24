@@ -12,8 +12,8 @@
   <.comment comment={comment} />
 <% end %>
 
-<.simple_form :let={f} for={@new_post} phx-submit="new_post">
-  <.input field={f[:text]} type="textarea" label="Comment"/>
+<.simple_form :let={f} for={@new_comment} phx-submit="new_comment">
+  <.input field={f[:text]} value={@new_comment.data.text} type="textarea" label="Comment"/>
   <.input field={f[:author]} label="Nickname" />
   <:actions>
     <.button>Save</.button>
