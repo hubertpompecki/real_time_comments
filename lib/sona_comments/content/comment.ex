@@ -2,10 +2,12 @@ defmodule SonaComments.Content.Comment do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias SonaComments.Content.Post
+
   schema "comments" do
     field :author, :string
     field :text, :string
-    field :post_id, :id
+    belongs_to :post, Post
 
     timestamps(type: :utc_datetime)
   end

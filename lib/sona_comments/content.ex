@@ -35,7 +35,7 @@ defmodule SonaComments.Content do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post_by_slug!(slug), do: Repo.get_by!(Post, slug: slug)
+  def get_post_by_slug!(slug), do: Repo.one!(from p in Post, where: p.slug == ^slug, preload: [:comments]) |> dbg()
 
   @doc """
   Creates a post.

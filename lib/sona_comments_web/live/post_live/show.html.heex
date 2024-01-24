@@ -7,3 +7,7 @@
 </p>
 
 <h2 class="mt-8 font-semibold leading-8 text-zinc-800">Comments</h2>
+
+<%= for comment <- @post.comments do %>
+  <.comment comment={comment} />
+<% end %>

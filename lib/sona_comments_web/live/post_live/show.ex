@@ -3,6 +3,8 @@ defmodule SonaCommentsWeb.PostLive.Show do
 
   alias SonaComments.Content
 
+  import SonaCommentsWeb.Comment
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}
@@ -10,7 +12,6 @@ defmodule SonaCommentsWeb.PostLive.Show do
 
   @impl true
   def handle_params(%{"slug" => slug}, _, socket) do
-    dbg(slug)
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
