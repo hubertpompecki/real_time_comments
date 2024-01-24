@@ -15,7 +15,8 @@ defmodule SonaComments.Content.Comment do
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:author, :text])
-    |> validate_required([:author, :text])
+    |> cast(attrs, [:author, :text, :post_id])
+    |> validate_required([:author, :text, :post_id])
+    |> foreign_key_constraint(:post_id)
   end
 end

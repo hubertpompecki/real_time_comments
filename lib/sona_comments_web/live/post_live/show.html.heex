@@ -11,3 +11,11 @@
 <%= for comment <- @post.comments do %>
   <.comment comment={comment} />
 <% end %>
+
+<.simple_form :let={f} for={@new_post} phx-submit="new_post">
+  <.input field={f[:text]} type="textarea" label="Comment"/>
+  <.input field={f[:author]} label="Nickname" />
+  <:actions>
+    <.button>Save</.button>
+  </:actions>
+</.simple_form>

@@ -6,7 +6,7 @@ defmodule SonaComments.Content do
   import Ecto.Query, warn: false
   alias SonaComments.Repo
 
-  alias SonaComments.Content.Post
+  alias SonaComments.Content.{Comment, Post}
 
   @doc """
   Returns the list of posts.
@@ -35,7 +35,10 @@ defmodule SonaComments.Content do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post_by_slug!(slug), do: Repo.one!(from p in Post, where: p.slug == ^slug, preload: [:comments]) |> dbg()
+  def get_post_by_slug!(slug) do
+    comments_query = from c in Comment, order_by: [desc: c.inserted_at]
+    Repo.one!(from p in Post, where: p.slug == ^slug, preload: [comments: ^comments_query])
+  end
 
   @doc """
   Creates a post.
@@ -56,37 +59,24 @@ defmodule SonaComments.Content do
   end
 
   @doc """
-  Updates a post.
+  Creates a comment.
 
   ## Examples
 
-      iex> update_post(post, %{field: new_value})
+      iex> create_post(%{field: value})
       {:ok, %Post{}}
 
-      iex> update_post(post, %{field: bad_value})
+      iex> create_post(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_post(%Post{} = post, attrs) do
-    post
-    |> Post.changeset(attrs)
-    |> Repo.update()
-  end
+  def create_comment(%Post{} = post, attrs \\ %{}) do
+    attrs = Map.put(attrs, "post_id", post.id)
 
-  @doc """
-  Deletes a post.
-
-  ## Examples
-
-      iex> delete_post(post)
-      {:ok, %Post{}}
-
-      iex> delete_post(post)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_post(%Post{} = post) do
-    Repo.delete(post)
+    %Comment{}
+    |> Comment.changeset(attrs)
+    |> dbg()
+    |> Repo.insert()
   end
 
   @doc """
