@@ -75,7 +75,6 @@ defmodule SonaComments.Content do
 
     %Comment{}
     |> Comment.changeset(attrs)
-    |> dbg()
     |> Repo.insert()
   end
 

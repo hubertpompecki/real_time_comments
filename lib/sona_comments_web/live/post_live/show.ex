@@ -1,6 +1,7 @@
 defmodule SonaCommentsWeb.PostLive.Show do
   use SonaCommentsWeb, :live_view
 
+  alias Phoenix.PubSub
   alias SonaComments.Content
   alias SonaComments.Content.{Comment, Post}
 
@@ -15,6 +16,8 @@ defmodule SonaCommentsWeb.PostLive.Show do
   def handle_params(%{"slug" => slug}, _, socket) do
     post = Content.get_post_by_slug!(slug)
 
+    if connected?(socket), do: PubSub.subscribe(SonaComments.PubSub, slug)
+
     {:noreply,
      socket
      |> assign(:page_title, post.title)
@@ -24,15 +27,16 @@ defmodule SonaCommentsWeb.PostLive.Show do
 
   @impl true
   def handle_event("new_comment", %{"comment" => %{"author" => author, "text" => text} = args}, socket) do
-    case Content.create_comment(socket.assigns.post, args) do
+    post = socket.assigns.post
+
+    case Content.create_comment(post, args) do
       {:ok, comment} ->
-        post = socket.assigns.post
-        post = %{post | comments: [comment | post.comments]}
+        PubSub.broadcast(SonaComments.PubSub, post.slug, {:new_comment, comment, self()})
+
         {:noreply, 
           socket
-          |> assign(:post, post)
           # not sure what is a better way to clear the form after submission
-          |> assign(:new_comment, dbg(Comment.changeset(%Comment{}, %{"author" => nil, "text" => nil})))
+          |> assign(:new_comment, Comment.changeset(%Comment{}, %{"author" => nil, "text" => nil}))
         }
 
       {:error, reason} ->
@@ -40,5 +44,14 @@ defmodule SonaCommentsWeb.PostLive.Show do
         socket
         |> put_flash(:error, "Comment couldn't be created: #{inspect(reason)}")}
     end
+  end
+
+  @impl true
+  def handle_info({:new_comment, comment, pid}, socket) do
+      post = socket.assigns.post
+      post = %{post | comments: [comment | post.comments]}
+          {:noreply, 
+            socket
+            |> assign(:post, post)}
   end
 end
