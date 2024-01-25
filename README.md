@@ -2,6 +2,8 @@
 
 A simple exercise showcasing how Elixir and Phoenix can be used to implement blog post commenting functionality. New comments appear in real time.
 
+![screen-gif](./gif/comments.gif)
+
 ## Running
 
 Requirements:
