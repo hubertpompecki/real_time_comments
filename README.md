@@ -1,18 +1,31 @@
-# SonaComments
+# RealTimeComments
 
-To start your Phoenix server:
+A simple exercise showcasing how Elixir and Phoenix can be used to implement blog post commenting functionality. New comments appear in real time.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Running
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Requirements:
+* Erlang 26.0
+* Elixir 1.16.0
+* Docker
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+1. Clone the repo.
+2. Run `make local-server`, this will start and setup a local database in Docker and then start the Phoenix application.
+3. Run `make local-seeds` to create some example posts.
+4. Navigate to `localhost:4000` and open a post.
+5. Repeat step 4 in another browser window.
+6. You should see that adding a post in one window makes it immediately visible in the other.
 
-## Learn more
+## Key ideas
+* Real-time updates are achieved using LiveView.
+* PubSub is used to update other LivewView processes viewing the same post.
+* Basing styling is done with TailwindCSS.
+* Most resources were generated using Phoenix generators and then cleaned up.
+* Basic testing is done using LiveViewTest.
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Further improvements
+There are multiple ways in which this project could be improved:
+* Pagination or infinite scrolling of comments when the list of comments becomes large.
+* Clustering so that the real-time aspect works when multiple instances of the application are deployed.
+* Better handling of error cases, e.g. rejected form submissions.
+* More test coverage.
