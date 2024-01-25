@@ -17,9 +17,9 @@ defmodule SonaCommentsWeb.Router do
   scope "/", SonaCommentsWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    live "/posts/:slug", PostLive.Show, :show
+    live "/", PostLive.Index, :index
     live "/posts", PostLive.Index, :index
+    live "/posts/:slug", PostLive.Show, :show
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
