@@ -38,12 +38,14 @@ defmodule SonaCommentsWeb.PostLiveTest do
       assert html =~ post.text
     end
 
-    test "publishes a new a comment" , %{conn: conn, post: post} do
+    test "publishes a new a comment", %{conn: conn, post: post} do
       {:ok, show_live, html} = live(conn, ~p"/posts/#{post.slug}")
       Phoenix.PubSub.subscribe(SonaComments.PubSub, post.slug)
 
       assert show_live
-             |> form("#new_comment_form", comment: %{text: "This is the text of the comment", author: "Alice"})
+             |> form("#new_comment_form",
+               comment: %{text: "This is the text of the comment", author: "Alice"}
+             )
              |> render_submit()
 
       assert_receive({:new_comment, comment})

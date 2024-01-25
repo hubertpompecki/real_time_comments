@@ -3,7 +3,7 @@ defmodule SonaCommentsWeb.PostLive.Show do
 
   alias Phoenix.PubSub
   alias SonaComments.Content
-  alias SonaComments.Content.{Comment, Post}
+  alias SonaComments.Content.Comment
 
   import SonaCommentsWeb.Comment
 
@@ -26,11 +26,7 @@ defmodule SonaCommentsWeb.PostLive.Show do
   end
 
   @impl true
-  def handle_event(
-        "new_comment",
-        %{"comment" => %{"author" => author, "text" => text} = args},
-        socket
-      ) do
+  def handle_event("new_comment", %{"comment" => args}, socket) do
     post = socket.assigns.post
 
     case Content.create_comment(post, args) do

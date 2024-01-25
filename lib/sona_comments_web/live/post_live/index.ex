@@ -2,7 +2,6 @@ defmodule SonaCommentsWeb.PostLive.Index do
   use SonaCommentsWeb, :live_view
 
   alias SonaComments.Content
-  alias SonaComments.Content.Post
 
   @impl true
   def mount(_params, _session, socket) do
