@@ -1,5 +1,5 @@
 .PHONY: local-sever
-local-server:
+local-server: local-database
 	mix ecto.create
 	mix ecto.migrate
 	iex -S mix phx.server
